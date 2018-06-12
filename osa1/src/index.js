@@ -4,15 +4,23 @@ import ReactDOM from 'react-dom'
 const Otsikko = (props) => {
     return (
         <div>
-            <h1>{props.name}</h1>
+            <h1>{props.kurssi}</h1>
         </div>
     )
 }
-
-const Sisalto = (props) => {
+const Osa = (props) => {
     return (
         <div>
             <p>{props.name} {props.tehtavia}</p>
+        </div>
+    )
+}
+const Sisalto = (props) => {
+    return (
+        <div>
+        <Osa name={props.osa1} tehtavia={props.tehtavia1} />
+        <Osa name={props.osa2} tehtavia={props.tehtavia2} />
+        <Osa name={props.osa3} tehtavia={props.tehtavia3} />
         </div>
     )
 }
@@ -36,10 +44,8 @@ const App = () => {
 
   return (
     <div>
-        <Otsikko name={kurssi} />
-        <Sisalto name={osa1} tehtavia={tehtavia1} />
-        <Sisalto name={osa2} tehtavia={tehtavia2} />
-        <Sisalto name={osa3} tehtavia={tehtavia3} />
+        <Otsikko kurssi={kurssi} />
+        <Sisalto osa1={osa1} osa2={osa2} osa3={osa3} tehtavia1={tehtavia1} tehtavia2={tehtavia2} tehtavia3={tehtavia3} />
         <Yhteensa count={tehtavia1 + tehtavia2 + tehtavia3} />
     </div>
   )
