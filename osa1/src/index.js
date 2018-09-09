@@ -1,69 +1,58 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const Otsikko = (props) => {
-    return (
-        <div>
-            <h1>{props.kurssi}</h1>
-        </div>
-    )
-}
-const Osa = (props) => {
-    return (
-        <div>
-            <p>{props.osat.nimi} {props.osat.tehtavia}</p>
-        </div>
+class App extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            hyva: 0,
+            neutraali: 0,
+            huono: 0
+        }
+    }
+    clickHyva = () => {
+        this.setState({
+            hyva: this.state.hyva + 1
+        })
+    }
+    clickNeutraali = () => {
+        this.setState({
+            neutraali: this.state.neutraali + 1
+        })
+    }
+    clickHuono = () => {
+        this.setState({
+            huono: this.state.huono + 1
+        })
+    }
 
-    )
-}
-const Sisalto = (props) => {
+    render () {
+        console.log(this.state.huono)
+        return (
+            <div>
+                <div>
+                    <button onClick={this.clickHyva}>hyvä</button> 
+                    <button onClick={this.clickNeutraali}>neutraali</button> 
+                    <button onClick={this.clickHuono}>huono</button>
+                </div>
+                <div>
+                    <h2>statistiikka</h2>
+                    <p>hyvä {this.state.hyva}</p>
+                    <p>neutraali {this.state.neutraali}</p>
+                    <p>huono {this.state.huono}</p>
+                </div>
+            </div>
+            
+        )
+    }
     
-    return (
-        <div>  
-            <Osa osat = {props.osat[0]} />
-            <Osa osat = {props.osat[1]} />
-            <Osa osat = {props.osat[2]} />
-        </div>
-    )
-}
-const Yhteensa = (props) => {
-    
-    return (
-        <div>
-        <p>yhteensä {props.osat[0].tehtavia + 
-            props.osat[1].tehtavia + props.osat[2].tehtavia} tehtävää</p>
-    </div>
-    )
 }
 
-const App = () => {
-  const kurssi = {
-  nimi: 'Half Stack -sovelluskehitys',
-  osat: [
-      {
-      nimi: 'Reactin perusteet',
-      tehtavia: 10
-  },
-  {
-      nimi:'Tiedonvälitys propseilla',
-      tehtavia: 7
-  },
-  {
-      nimi: 'Komponenttien tila',
-     tehtavia: 14
-  }
-  ]
-}
-  return (
-    <div>
-        <Otsikko kurssi={kurssi.nimi} />
-        <Sisalto osat ={kurssi.osat} />
-        <Yhteensa osat ={kurssi.osat} />
-    </div>
-  )
-}
+
+
 
 ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-)
+    <App />,
+    document.getElementById('root')
+  )
+
