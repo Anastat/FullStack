@@ -33,7 +33,7 @@ const Statistics = (props) => {
      }
      return (
          <div>
-             
+
          </div>
      )
  }
@@ -55,36 +55,27 @@ class App extends React.Component {
             laskuri: this.state.laskuri +1
         })
     }
-    clickHyva = () => {
-        this.setState({
-            hyva: this.state.hyva + 1,
-            summa: this.state.summa + 1,
-            positiivisia: this.state.positiivisia + 1
-        });
-        this.laskuriKasvaa()    
-    }
-    clickNeutraali = () => {
-        this.setState({
-            neutraali: this.state.neutraali + 1
-        });
-        this.laskuriKasvaa()
-    }
-    clickHuono = () => {
-        this.setState({
-            huono: this.state.huono + 1,
-            summa: this.state.summa - 1,
-        });
-        this.laskuriKasvaa() 
-    }
+
+
+    asetaArvo = (nappi, arvo, sumArvo) => () => {
+        
+        this.setState({ [nappi]: arvo });
+        this.setState({summa: sumArvo});
+        this.laskuriKasvaa();
+        if (nappi === "hyva")  {
+            this.setState ({positiivisia: this.state.positiivisia + 1})
+        }
+    } 
+
 
     render () {
         return (
             <div>
                 <div>
                     <h2>Anna palautetta</h2>
-                    <Button handleClick={this.clickHyva} text="Hyvä"/> 
-                    <Button handleClick={this.clickNeutraali} text="Neutraali"/> 
-                    <Button handleClick={this.clickHuono} text="Huono"/>
+                    <Button handleClick={this.asetaArvo('hyva', this.state.hyva+1, this.state.summa+1)} text="Hyvä"/> 
+                    <Button handleClick={this.asetaArvo('neutraali', this.state.neutraali+1, this.state.summa + 0)} text="Neutraali"/> 
+                    <Button handleClick={this.asetaArvo('huono', this.state.huono + 1, this.state.summa -1)} text="Huono"/>
                 </div>
                 <div>
                     <h2>Statistiikka</h2>
