@@ -1,6 +1,43 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+const Button = ({handleClick,  text}) => (
+    <button onClick={handleClick}>
+        {text}
+    </button>
+)
+
+const Statistics = (props) => {
+    if (props.laskuri===0) {
+        return (
+            <div>
+                ei yhtään palautetta annettu
+            </div>
+        )
+    }
+    return (
+        <div>
+            <p>hyvä {props.hyva}</p>
+            <p>neutraali {props.neutraali}</p>
+            <p>huono {props.huono}</p>
+        </div>
+    )
+}
+ const Statistic = ({text, ammount, laskuri}) => {
+     if (laskuri>0) {
+        return (
+            <div>
+                <p>{text} {ammount}</p>
+            </div>
+        )
+     }
+     return (
+         <div>
+             
+         </div>
+     )
+ }
+
 class App extends React.Component {
     constructor(props) {
         super(props)
@@ -41,22 +78,19 @@ class App extends React.Component {
     }
 
     render () {
-        console.log(this.state.laskuri, this.state.summa)
         return (
             <div>
                 <div>
                     <h2>Anna palautetta</h2>
-                    <button onClick={this.clickHyva}>hyvä</button> 
-                    <button onClick={this.clickNeutraali}>neutraali</button> 
-                    <button onClick={this.clickHuono}>huono</button>
+                    <Button handleClick={this.clickHyva} text="Hyvä"/> 
+                    <Button handleClick={this.clickNeutraali} text="Neutraali"/> 
+                    <Button handleClick={this.clickHuono} text="Huono"/>
                 </div>
                 <div>
                     <h2>Statistiikka</h2>
-                    <p>hyvä {this.state.hyva}</p>
-                    <p>neutraali {this.state.neutraali}</p>
-                    <p>huono {this.state.huono}</p>
-                    <p>keskiarvo {(this.state.summa/this.state.laskuri).toFixed(2)}</p>
-                    <p>positiivisia {(this.state.positiivisia*100/this.state.laskuri).toFixed(1)} %</p>
+                    <Statistics hyva={this.state.hyva} neutraali={this.state.neutraali} huono={this.state.huono} laskuri={this.state.laskuri}/>
+                    <Statistic text="keskiarvo" ammount={(this.state.summa/this.state.laskuri).toFixed(2)} laskuri={this.state.laskuri}/>
+                    <Statistic text="positiivisia" ammount={(this.state.positiivisia*100/this.state.laskuri).toFixed(1)} laskuri={this.state.laskuri} /> 
                 </div>
             </div>
             
