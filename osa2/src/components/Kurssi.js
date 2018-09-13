@@ -1,9 +1,8 @@
 import React from 'react'
-const Yhteensa = (osat) => {
-    let sum = 0;
-    osat.map(osa => sum += Number(osa.tehtavia));
-    return sum;
-}
+const yhteensa = (osat) => Object.keys(osat).reduce(function (sum, key) {
+            return sum + osat[key].tehtavia;
+        }, 0);
+
 
 const Kurssi = ({kurssi}) => {
     return (
@@ -13,7 +12,7 @@ const Kurssi = ({kurssi}) => {
             </h1>
            
             {kurssi.osat.map(osa => <p key={osa.id}>{osa.nimi} {osa.tehtavia}</p>)}
-            <p>Yhteennsä {Yhteensa(kurssi.osat)} tehtävää</p>
+           <p>Yhteensä {yhteensa(kurssi.osat)} tehtavia</p>
         </div>
     )
 }
