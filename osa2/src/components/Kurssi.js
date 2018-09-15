@@ -5,6 +5,7 @@ const yhteensa = (osat) => Object.keys(osat).reduce(function (sum, key) {
 
 
 const Kurssi = ({kurssi}) => {
+
     return (
         <div>
             <h1>
@@ -12,7 +13,7 @@ const Kurssi = ({kurssi}) => {
             </h1>
            
             {kurssi.osat.map(osa => <p key={osa.id}>{osa.nimi} {osa.tehtavia}</p>)}
-           <p>Yhteensä {yhteensa(kurssi.osat)} tehtavia</p>
+           <p>Yhteensä {yhteensa(kurssi.osat)} tehtävää</p>
         </div>
     )
 }
