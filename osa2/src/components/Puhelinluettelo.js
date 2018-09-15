@@ -7,9 +7,11 @@ class Puhelinluettelo extends React.Component {
     super(props)
     this.state = {
       persons: [
-        { name: 'Arto Hellas' }
+        { name: 'Arto Hellas',
+          numero: '040-123456' }
       ],
-      newName: ''
+      newName: '',
+      newNumero: ''
     }
   }
 
@@ -21,7 +23,8 @@ class Puhelinluettelo extends React.Component {
         alert("This name already exist")
     } else {
         const nameObject = {
-            name: this.state.newName
+            name: this.state.newName,
+            numero: this.state.newNumero
         }
        
         
@@ -30,7 +33,8 @@ class Puhelinluettelo extends React.Component {
   
         this.setState({
             persons,
-            newName: ''
+            newName: '',
+            newNumero: ''
         })
     }
       
@@ -42,6 +46,10 @@ class Puhelinluettelo extends React.Component {
       this.setState({newName: event.target.value})
   }
 
+  handleNumeroChange = (event) => {
+      this.setState({newNumero: event.target.value})
+  }
+
   render() {
     return (
       <div>
@@ -51,11 +59,14 @@ class Puhelinluettelo extends React.Component {
             nimi: <input value={this.state.newName} onChange={this.handleNameChange}/>
           </div>
           <div>
+            numero: <input value={this.state.newNumero} onChange={this.handleNumeroChange}/>
+          </div>
+          <div>
             <button type="submit">lisää</button>
           </div>
         </form>
         <h2>Numerot</h2>
-        {this.state.persons.map (person => <li key={person.name}>{person.name}</li>)}
+        {this.state.persons.map (person => <li key={person.name}>{person.name} {person.numero}</li>)}
       </div>
     )
   }
