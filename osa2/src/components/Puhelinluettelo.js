@@ -1,5 +1,7 @@
 import React from 'react';
 
+
+
 class Puhelinluettelo extends React.Component {
   constructor(props) {
     super(props)
@@ -12,17 +14,27 @@ class Puhelinluettelo extends React.Component {
   }
 
   addName = (event) => {
-      event.preventDefault()
-      const nameObject = {
-          name: this.state.newName
-      }
+    
+    event.preventDefault()
 
-      const persons = this.state.persons.concat(nameObject)
-
-      this.setState({
-          persons,
-          newName: ''
-      })
+    if (this.state.persons.find(person => person.name.includes(this.state.newName))) {
+        alert("This name already exist")
+    } else {
+        const nameObject = {
+            name: this.state.newName
+        }
+       
+        
+  
+        const persons = this.state.persons.concat(nameObject)
+  
+        this.setState({
+            persons,
+            newName: ''
+        })
+    }
+      
+    
   }
 
   handleNameChange = (event) => {
