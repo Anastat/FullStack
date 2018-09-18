@@ -6,6 +6,7 @@ class Puhelinluettelo extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      filterName: '',
       persons: [
         { name: 'Arto Hellas',
           numero: '040-123456' }
@@ -14,6 +15,8 @@ class Puhelinluettelo extends React.Component {
       newNumero: ''
     }
   }
+
+  
 
   addName = (event) => {
     
@@ -41,6 +44,8 @@ class Puhelinluettelo extends React.Component {
     
   }
 
+  nameFilter = (event) => event.preventDefault()
+
   handleNameChange = (event) => {
       console.log(event.target.value)
       this.setState({newName: event.target.value})
@@ -50,10 +55,25 @@ class Puhelinluettelo extends React.Component {
       this.setState({newNumero: event.target.value})
   }
 
+  handleFilterChange = (event) => {
+    this.setState({filterName: event.target.value})
+  }
+
   render() {
+    const namesToShow = this.state.filterName ===''? 
+        this.state.persons : 
+        this.state.persons.filter(person => person.name.toLowerCase().includes(this.state.filterName.toLowerCase()));
+
     return (
       <div>
         <h2>Puhelinluettelo</h2>
+        <form onSubmit={this.nameFilter}>
+        <div>
+            rajaa näytettäviä: <input value={this.state.filterName} onChange={this.handleFilterChange}/>
+        </div>
+
+        </form>
+        <h2>Lisää uusi</h2>
         <form onSubmit={this.addName}>
           <div>
             nimi: <input value={this.state.newName} onChange={this.handleNameChange}/>
@@ -66,7 +86,7 @@ class Puhelinluettelo extends React.Component {
           </div>
         </form>
         <h2>Numerot</h2>
-        {this.state.persons.map (person => <li key={person.name}>{person.name} {person.numero}</li>)}
+        {namesToShow.map (person => <li key={person.name}>{person.name} {person.numero}</li>)}
       </div>
     )
   }
