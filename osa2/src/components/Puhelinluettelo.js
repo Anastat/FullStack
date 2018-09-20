@@ -1,5 +1,5 @@
 import React from 'react';
-
+import ShowNumberList from './ShowNumberList';
 
 
 class Puhelinluettelo extends React.Component {
@@ -85,8 +85,7 @@ class Puhelinluettelo extends React.Component {
             <button type="submit">lisää</button>
           </div>
         </form>
-        <h2>Numerot</h2>
-        {namesToShow.map (person => <li key={person.name}>{person.name} {person.numero}</li>)}
+        <ShowNumberList names={namesToShow}/>
       </div>
     )
   }
