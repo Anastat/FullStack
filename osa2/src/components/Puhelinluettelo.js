@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios'
 import ShowNumberList from './ShowNumberList';
+import NameFilter from './NameFilter'
 
 
 class Puhelinluettelo extends React.Component {
@@ -36,21 +37,19 @@ class Puhelinluettelo extends React.Component {
             numero: this.state.newNumero
         }
        
-        
-  
-        const persons = this.state.persons.concat(nameObject)
-  
-        this.setState({
-            persons,
-            newName: '',
-            newNumero: ''
-        })
+        axios
+          .post('http://localhost:3001/persons', nameObject)
+          .then(response => {
+            this.setState({
+              persons: this.state.persons.concat(response.data),
+              newName: '',
+              newNumero: ''
+            })
+          })
     }
       
     
   }
-
-  nameFilter = (event) => event.preventDefault()
 
   handleNameChange = (event) => {
       console.log(event.target.value)
@@ -73,12 +72,8 @@ class Puhelinluettelo extends React.Component {
     return (
       <div>
         <h2>Puhelinluettelo</h2>
-        <form onSubmit={this.nameFilter}>
-        <div>
-            rajaa näytettäviä: <input value={this.state.filterName} onChange={this.handleFilterChange}/>
-        </div>
-
-        </form>
+        <NameFilter handler={this.handleFilterChange}/>
+        
         <h2>Lisää uusi</h2>
         <form onSubmit={this.addName}>
           <div>
