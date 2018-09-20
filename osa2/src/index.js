@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Puhelinluettelo from './components/Puhelinluettelo';
+import MaidenTiedot from './components/MaidenTiedot';
 
 
-ReactDOM.render(<Puhelinluettelo />, document.getElementById('root'));
+ReactDOM.render(<MaidenTiedot />, document.getElementById('root'));
 
