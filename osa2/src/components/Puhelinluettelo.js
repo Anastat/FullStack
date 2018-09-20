@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios'
 import ShowNumberList from './ShowNumberList';
-import NameFilter from './NameFilter'
+import NameFilter from './NameFilter';
+import personsService from '../services/persons'
 
 
 class Puhelinluettelo extends React.Component {
