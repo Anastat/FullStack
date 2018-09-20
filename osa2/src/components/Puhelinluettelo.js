@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios'
 import ShowNumberList from './ShowNumberList';
 
 
@@ -7,13 +8,18 @@ class Puhelinluettelo extends React.Component {
     super(props)
     this.state = {
       filterName: '',
-      persons: [
-        { name: 'Arto Hellas',
-          numero: '040-123456' }
-      ],
+      persons: [],
       newName: '',
       newNumero: ''
     }
+  }
+
+  componentDidMount() {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response=> {
+        this.setState({persons: response.data})
+      })
   }
 
   
