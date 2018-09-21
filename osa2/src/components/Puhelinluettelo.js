@@ -14,6 +14,7 @@ class Puhelinluettelo extends React.Component {
       newName: '',
       newNumero: ''
     }
+    this.deleteName = this.deleteName.bind(this)
   }
 
   componentDidMount() {
@@ -48,8 +49,18 @@ class Puhelinluettelo extends React.Component {
             })
           })
     }
+  }
+
+  deleteName = (event) => {
+    console.log(event.target.value)
+    if (window.confirm(`poistetaanko ${event.target.name}`)) {
+      const index = this.state.persons.findIndex(person => person.id === event.target.value)
+      this.setState({persons: this.state.persons.splice(index, 1)})
+      personsService
+      .deletePerson(event.target.value)
       
-    
+    }
+   
   }
 
   handleNameChange = (event) => {
@@ -87,7 +98,7 @@ class Puhelinluettelo extends React.Component {
             <button type="submit">lisää</button>
           </div>
         </form>
-        <ShowNumberList names={namesToShow}/>
+        <ShowNumberList names={namesToShow} handleClick={this.deleteName}/>
       </div>
     )
   }
