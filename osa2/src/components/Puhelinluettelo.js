@@ -2,7 +2,8 @@ import React from 'react';
 import axios from 'axios'
 import ShowNumberList from './ShowNumberList';
 import NameFilter from './NameFilter';
-import personsService from '../services/persons'
+import personsService from '../services/persons';
+import Notification from './Notification'
 
 
 class Puhelinluettelo extends React.Component {
@@ -12,7 +13,8 @@ class Puhelinluettelo extends React.Component {
       filterName: '',
       persons: [],
       newName: '',
-      newNumero: ''
+      newNumero: '',
+      error: null
     }
     this.deleteName = this.deleteName.bind(this)
   }
@@ -45,8 +47,10 @@ class Puhelinluettelo extends React.Component {
             this.setState({
               persons: this.state.persons.concat(response.data),
               newName: '',
-              newNumero: ''
+              newNumero: '',
+              error: `lisättiin ${nameObject.name}`
             })
+            setTimeout(() => this.setState({error: null}), 2000)
           })
     }
   }
@@ -55,7 +59,11 @@ class Puhelinluettelo extends React.Component {
     console.log(event.target.value)
     if (window.confirm(`poistetaanko ${event.target.name}`)) {
       const index = this.state.persons.findIndex(person => person.id === event.target.value)
-      this.setState({persons: this.state.persons.splice(index, 1)})
+      this.setState({
+        persons: this.state.persons.splice(index, 1),
+        error: `${event.target.name} poistettu`
+      })
+      setTimeout(() => this.setState({error: null}), 2000)
       personsService
       .deletePerson(event.target.value)
       
@@ -84,6 +92,7 @@ class Puhelinluettelo extends React.Component {
     return (
       <div>
         <h2>Puhelinluettelo</h2>
+        <Notification message={this.state.error}/>
         <NameFilter handler={this.handleFilterChange}/>
         
         <h2>Lisää uusi</h2>
