@@ -26,7 +26,10 @@ let persons = [
             id: 4
         }
       ]
-
+const generateId = () => {
+    const maxId = persons.length > 0 ? persons.map(person => person.id).sort().reverse()[0]:1
+    return maxId + 1
+}
 
 app.get('/api/persons', (req, res) => {
     res.json(persons)
@@ -55,6 +58,22 @@ app.get('/info', (req, res) => {
       persons = persons.filter(person => person.id !== id)
 
       res.status(204).end()
+  })
+
+  app.post('/api/persons', (req, res) => {
+      const body = req.body
+      if (body.name == undefined) {
+          return res.status(400).json({error: 'name missing'})
+      }
+
+      const person = {
+          name: body.name,
+          number: body.number,
+          id: generateId()
+      }
+
+      persons = persons.concat(person)
+      res.json(person)
   })
 
 const PORT = 3001
